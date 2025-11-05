@@ -1,6 +1,8 @@
 from typing import Optional
 from uuid import UUID
+from warnings import deprecated
 
+from fastapi import dependencies
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -20,8 +22,10 @@ class CRUDUser(CRUDBase[User, UserCreate, UserCreate]):
         return result.scalar_one_or_none()
     
     async def create(self, db:AsyncSession, *, obj_in:UserCreate) -> User:
-        # should hash password
-        hashed_password = "supasecredpass" # should change it!!!
+        from passlib.context import CryptContext
+        pwd_context= CryptContext(schemes=["bcrypt"], deprecated="auto") 
+        hashed_password = pwd_context.hash(obj_in.password)
+
         db_obj = User(
             username=obj_in.username,
             email=obj_in.email,
@@ -29,6 +33,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserCreate]):
             first_name=obj_in.first_name,
             last_name=obj_in.last_name,
         )
+
         db.add(db_obj)
         await db.commit()
         await db.refresh(db_obj)
