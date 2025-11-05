@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from uuid import UUID
 from app.crud.base import CRUDBase
 from app.models.recipes import Recipe
-from app.schemas.recepies import RecipeCreate, RecipeUpdate
+from app.schemas.recipes import RecipeCreate, RecipeUpdate
 
 
 class CRUDRecipe(CRUDBase[Recipe, RecipeCreate, RecipeUpdate]):
