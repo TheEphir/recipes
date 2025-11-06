@@ -13,6 +13,13 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     password: str
     
+    
+class UserUpdate(UserBase):
+    username: Optional[str] = None
+    email: Optional[EmailStr] = None
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+
 
 class UserResponse(UserBase):
     id: UUID
