@@ -36,8 +36,6 @@ async def test_user(db_session: AsyncSession):
         username="testuser",
         email="test@a.com",
         password="supapass123",
-        first_name="test",
-        last_name="user"
     )
     return await crud_user.create(db=db_session, obj_in=user_in)
 
