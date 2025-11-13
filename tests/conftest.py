@@ -1,6 +1,4 @@
-import os
 import pytest
-import asyncio
 from dotenv import load_dotenv
 
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
@@ -13,9 +11,9 @@ from app.crud.users import user as crud_user
 from app.crud.recipes import recipe as crud_recipe
 
 load_dotenv()
-DATABASE_URL = "sqlite+aiosqlite:///:memory:" # in memory db   O_O
+URL = "sqlite+aiosqlite:///:memory:" # in memory db   O_O
 
-engine = create_async_engine(DATABASE_URL, echo=False)
+engine = create_async_engine(URL, echo=False)
 local_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 @pytest.fixture(scope="function")
